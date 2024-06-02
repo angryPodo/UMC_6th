@@ -3,6 +3,7 @@ import { getTempData, CheckFlag } from "../services/tempService";
 import { response } from "../config/response";
 
 export const tempTest = (req, res, next) => {
+  console.log("/temp/test/");
   res.send(response(status.SUCCESS, getTempData()))
 };
 
