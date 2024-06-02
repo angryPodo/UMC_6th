@@ -1,4 +1,5 @@
-import express, { response } from 'express';
+import express from 'express';
+import { response } from './config/response';
 import { tempRouter } from './routes/tempRoute';
 
 const app = express();
