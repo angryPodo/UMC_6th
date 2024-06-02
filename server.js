@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { response } from 'express';
 import { tempRouter } from './routes/tempRoute';
 
 const app = express();
@@ -9,8 +9,9 @@ app.use('/temp', tempRouter);
 
 // error handling
 app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).send(err.stack);
+    res.locals.message = err.message;
+    res.locals.error = process.env.NODE_ENV !== 'production' ? err : {};
+    res.status(err.data.status).send(response(err.data));
 });
 
 
