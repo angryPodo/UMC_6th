@@ -1,12 +1,19 @@
 import express from 'express';
 import { response } from './config/response';
 import { tempRouter } from './routes/tempRoute';
+import { BaseError } from './config/error';
+import { status } from './config/responseStatus';
 
 const app = express();
 const port = 3000;
 
 // route setting
 app.use('/temp', tempRouter);
+
+app.use((req, res, next) => {
+    const err = new BaseError(status.NOT_FOUND);
+    next(err);
+});
 
 // error handling
 app.use((err, req, res, next) => {
