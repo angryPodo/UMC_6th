@@ -8,8 +8,12 @@ export const getTempData = () => {
 }
 
 export function CheckFlag(flag) {
-  if (flag == 1)
+  if (flag == 1) {
     throw new BaseError(status.BAD_REQUEST);
+  }
+  else if (flag == 2) {
+    throw new BaseError(status.FORBIDDEN);
+  }
   else {
     return flagResponseDTO(flag);
   }
