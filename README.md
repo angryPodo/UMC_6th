@@ -1,7 +1,3 @@
-# UMC_NODE Project
-
-![UMC_NODE](https://img.icons8.com/ios-filled/50/000000/code.png)
-
 ## 프로젝트 구조
 
 UMC_NODE/
