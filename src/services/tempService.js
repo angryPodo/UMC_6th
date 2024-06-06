@@ -1,7 +1,7 @@
 import { tempResponseDTO } from "../dtos/tempResponseDTO"
 import { flagResponseDTO } from "../dtos/tempResponseDTO";
-import { BaseError } from "../config/error";
-import { status } from "../config/responseStatus";
+import { BaseError } from "../../config/error";
+import { status } from "../../config/responseStatus";
 
 export const getTempData = () => {
   return tempResponseDTO("This is TEST! >.0")
