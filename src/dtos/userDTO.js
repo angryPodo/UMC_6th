@@ -1,8 +1,28 @@
-
+// userDTO.js
 export const signinResponseDTO = (user, prefer) => {
-  const preferFood = [];
-  for (let i = 0; i < prefer[0].length; i++) {
-    preferFood.push(prefer[0][i].f_category_name);
+  if (!user) {
+    throw new Error('User data is missing');
   }
-  return { "email": user[0].email, "name": user[0].user_name, "preferCategory": preferFood };
+
+  if (!prefer) {
+    prefer = []; // prefer가 없는 경우 빈 배열로 초기화
+  }
+
+  return {
+    user: {
+      id: user.id,
+      email: user.email,
+      name: user.name,
+      gender: user.gender,
+      age: user.age,
+      address: user.address,
+      small_address: user.small_address,
+      point: user.point
+    },
+    prefer: prefer.map(p => ({
+      id: p.id,
+      category_id: p.category_id,
+      category_name: p.category_name
+    }))
+  };
 }
