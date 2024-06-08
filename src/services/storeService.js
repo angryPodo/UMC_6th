@@ -5,14 +5,21 @@ import { addStore } from "../models/storeDao";
 
 export const joinStore = async (body) => {
   const joinStoreData = await addStore({
-    'region_id': body.region_id,
-    'name': body.name,
-    'address': body.address,
-    'star_rating': body.star_rating
+    region_id: body.region_id,
+    name: body.name,
+    address: body.address,
+    star_rating: body.star_rating
   });
 
-  if (joinStoreData == -1) {
+  if (joinStoreData === -1) {
     throw new BaseError(status.STORENAME_ALREADY_EXIST);
   }
-  return storeAddResponseDTO(joinStoreData); // joinStoreData를 반환해야 함
+  console.log('joinStoreData:', joinStoreData); // joinStoreData 값 확인
+  return storeAddResponseDTO({
+    id: joinStoreData,
+    region_id: body.region_id,
+    name: body.name,
+    address: body.address,
+    star_rating: body.star_rating
+  });
 };
