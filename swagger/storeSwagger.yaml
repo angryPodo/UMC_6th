@@ -90,6 +90,93 @@ paths:
                   message:
                     type: string
                     example: 잘못된 요청입니다.
+  /store/review:
+    post:
+      summary: Add a new review to a store
+      tags:
+        - Store
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                store_id:
+                  type: integer
+                  example: 1
+                  description: ID of the store being reviewed
+                user_id:
+                  type: integer
+                  example: 1
+                  description: ID of the user adding the review
+                body:
+                  type: string
+                  example: 리뷰내용
+                  description: The content of the review
+                star_rating:
+                  type: number
+                  format: float
+                  example: 4.5
+                  description: The star rating of the review
+      responses:
+        '200':
+          description: Review added successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 123
+                    description: ID of the created review
+                  store_id:
+                    type: integer
+                    example: 1
+                    description: ID of the store being reviewed
+                  user_id:
+                    type: integer
+                    example: 1
+                    description: ID of the user adding the review
+                  body:
+                    type: string
+                    example: 맛없어요
+                    description: The content of the review
+                  star_rating:
+                    type: number
+                    format: float
+                    example: 4.5
+                    description: The star rating of the review
+                  created_at:
+                    type: string
+                    format: date-time
+                    example: 2024-06-08T12:34:56Z
+                    description: Review creation timestamp
+                  updated_at:
+                    type: string
+                    format: date-time
+                    example: 2024-06-08T12:34:56Z
+                    description: Review last update timestamp
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 400
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: string
+                    example: COMMON001
+                  message:
+                    type: string
+                    example: 잘못된 요청입니다.
   /mission/add:
     post:
       summary: Add a new mission to a store
@@ -171,6 +258,25 @@ paths:
                   message:
                     type: string
                     example: 잘못된 요청입니다.
+        '409':
+          description: Conflict - Mission already exists
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 409
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: string
+                    example: "MISSSION001"
+                  message:
+                    type: string
+                    example: "이미 존재하는 미션 입니다."
 components:
   schemas:
     Store:
@@ -200,6 +306,33 @@ components:
           type: string
           format: date-time
           description: Store last update timestamp
+    Review:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID of the review
+        store_id:
+          type: integer
+          description: ID of the store being reviewed
+        user_id:
+          type: integer
+          description: ID of the user adding the review
+        body:
+          type: string
+          description: The content of the review
+        star_rating:
+          type: number
+          format: float
+          description: The star rating of the review
+        created_at:
+          type: string
+          format: date-time
+          description: Review creation timestamp
+        updated_at:
+          type: string
+          format: date-time
+          description: Review last update timestamp
     Mission:
       type: object
       properties:

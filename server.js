@@ -9,6 +9,7 @@ import { status } from './config/responseStatus.js';
 import { userRouter } from './src/routes/userRoute.js';
 import { tempRouter } from './src/routes/tempRoute.js';
 import { storeRouter } from './src/routes/storeRoute.js';
+import { missionRouter } from './src/routes/missionRoute.js';
 
 import { specs } from './swagger/swagerConfig.js';
 import SwaggerUi from 'swagger-ui-express';
@@ -21,6 +22,7 @@ app.use(cors());                            // cors 방식 허용
 app.use(express.static(__dirname + '/public')); // 정적 파일 접근
 app.use(express.json());                    // request의 본문을 json으로 해석할 수 있도록 함
 app.use(express.urlencoded({ extended: false })); // 단순 객체 문자열 형태로 본문 데이터 해석
+app.use('/mission', missionRouter);
 
 // Swagger 설정
 app.use('/api-docs', SwaggerUi.serve, SwaggerUi.setup(specs));
