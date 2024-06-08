@@ -8,7 +8,7 @@ servers:
 paths:
   /store/add:
     post:
-      summary: 지역 가게 추가
+      summary: Add a new store
       tags:
         - Store
       requestBody:
@@ -21,23 +21,23 @@ paths:
                 region_id:
                   type: integer
                   example: 1
-                  description: 가게가 속한 지역 ID
+                  description: ID of the region where the store is located
                 name:
                   type: string
-                  example: 갓청자 팝업 스토어
-                  description: 가게 이름
+                  example: Sample Store
+                  description: Name of the store
                 address:
                   type: string
-                  example: 서울시 송파구 충민로
-                  description: 가게 주소
+                  example: 123 Sample Street
+                  description: Address of the store
                 star_rating:
                   type: number
                   format: float
                   example: 4.5
-                  description: 가게 별점
+                  description: Star rating of the store
       responses:
         '200':
-          description: 성공적으로 추가 되었습니다.
+          description: Store created successfully
           content:
             application/json:
               schema:
@@ -57,16 +57,16 @@ paths:
                     properties:
                       id:
                         type: integer
-                        example: 1
+                        example: 123
                       region_id:
                         type: integer
                         example: 1
                       name:
                         type: string
-                        example: 추가한 가게명
+                        example: sp Store
                       address:
                         type: string
-                        example: 가게의 주소
+                        example: 123 Sample Street
                       star_rating:
                         type: number
                         format: float
@@ -78,6 +78,9 @@ paths:
               schema:
                 type: object
                 properties:
+                  status:
+                    type: integer
+                    example: 400
                   isSuccess:
                     type: boolean
                     example: false
@@ -87,62 +90,139 @@ paths:
                   message:
                     type: string
                     example: 잘못된 요청입니다.
-        '409':
-          description: 가게 중복시 충돌 오류
+  /mission/add:
+    post:
+      summary: Add a new mission to a store
+      tags:
+        - Mission
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                store_id:
+                  type: integer
+                  example: 1
+                  description: ID of the store for the mission
+                reward:
+                  type: integer
+                  example: 1000
+                  description: Reward for completing the mission
+                body:
+                  type: string
+                  example: 미션 내용
+                  description: The content of the mission
+      responses:
+        '200':
+          description: Mission added successfully
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  isSuccess:
-                    type: boolean
-                    example: false
-                  code:
+                  id:
+                    type: integer
+                    example: 1
+                    description: ID of the created mission
+                  mission_id:
+                    type: integer
+                    example: 1
+                    description: ID of the mission
+                  store_id:
+                    type: integer
+                    example: 1
+                    description: ID of the store for the mission
+                  reward:
+                    type: integer
+                    example: 1000
+                    description: Reward for completing the mission
+                  body:
                     type: string
-                    example: STORE5001
-                  message:
+                    example: 미션 내용
+                    description: The content of the mission
+                  created_at:
                     type: string
-                    example: 이미 존재하는 가게 입니다.
-                  details:
-                    type: object
-                    properties:
-                      id:
-                        type: integer
-                        description: 이미 존재하는 가게 ID
-                      region_id:
-                        type: integer
-                        description: 존재하는 가게 지역 ID
-                      name:
-                        type: string
-                        description: 가게 이름
-                      address:
-                        type: string
-                        description: 가게 주소
-                      star_rating:
-                        type: number
-                        format: float
-                        description: 별점
-                      created_at:
-                        type: string
-                        format: date-time
-                        description: 추가된 시간
-                      updated_at:
-                        type: string
-                        format: date-time
-                        description: 업데이트 된 시간
-        '500':
-          description: Internal Server Error
+                    format: date-time
+                    example: 2024-06-08T12:34:56Z
+                    description: Mission creation timestamp
+                  updated_at:
+                    type: string
+                    format: date-time
+                    example: 2024-06-08T12:34:56Z
+                    description: Mission last update timestamp
+        '400':
+          description: Bad Request
           content:
             application/json:
               schema:
                 type: object
                 properties:
+                  status:
+                    type: integer
+                    example: 400
                   isSuccess:
                     type: boolean
                     example: false
                   code:
                     type: string
-                    example: COMMON000
+                    example: COMMON001
                   message:
                     type: string
-                    example: 서버 에러, 관리자에게 문의 바랍니다.
+                    example: 잘못된 요청입니다.
+components:
+  schemas:
+    Store:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID of the store
+        region_id:
+          type: integer
+          description: ID of the region where the store is located
+        name:
+          type: string
+          description: Name of the store
+        address:
+          type: string
+          description: Address of the store
+        star_rating:
+          type: number
+          format: float
+          description: Star rating of the store
+        created_at:
+          type: string
+          format: date-time
+          description: Store creation timestamp
+        updated_at:
+          type: string
+          format: date-time
+          description: Store last update timestamp
+    Mission:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID of the mission
+        mission_id:
+          type: integer
+          description: ID of the mission
+        store_id:
+          type: integer
+          description: ID of the store for the mission
+        reward:
+          type: integer
+          description: Reward for completing the mission
+        body:
+          type: string
+          description: The content of the mission
+        created_at:
+          type: string
+          format: date-time
+          description: Mission creation timestamp
+        updated_at:
+          type: string
+          format: date-time
+          description: Mission last update timestamp

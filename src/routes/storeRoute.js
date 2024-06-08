@@ -1,7 +1,7 @@
 import express from "express";
-import asyncHandler from 'express-async-handler';
-import { storeAdd } from "../controllers/storeController.js";
+import { storeAdd, addStoreReview } from "../controllers/storeController.js";
 
 export const storeRouter = express.Router();
 
-storeRouter.post('/add', asyncHandler(storeAdd));
+storeRouter.post('/add', storeAdd);
+storeRouter.post('/review', addStoreReview); // 새로운 리뷰 추가 라우트
