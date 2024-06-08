@@ -1,11 +1,15 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
+
 import { response } from './config/response';
 import { BaseError } from './config/error';
 import { status } from './config/responseStatus.js';
-import { userRouter } from './src/routes/userRoute.js'; // userRouter를 올바르게 불러옵니다.
-import { tempRouter } from './src/routes/tempRoute.js'; // tempRouter 추가
+
+import { userRouter } from './src/routes/userRoute.js';
+import { tempRouter } from './src/routes/tempRoute.js';
+import { storeRouter } from './src/routes/storeRoute.js';
+
 import { specs } from './swagger/swagerConfig.js';
 import SwaggerUi from 'swagger-ui-express';
 
@@ -23,7 +27,8 @@ app.use('/api-docs', SwaggerUi.serve, SwaggerUi.setup(specs));
 
 // 라우트 설정
 app.use('/user', userRouter);
-app.use('/temp', tempRouter); // temp 라우트 추가
+app.use('/temp', tempRouter);
+app.use('/store', storeRouter);
 
 // 에러 핸들링
 app.use((req, res, next) => {

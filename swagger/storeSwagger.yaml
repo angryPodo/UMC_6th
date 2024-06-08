@@ -1,0 +1,173 @@
+openapi: 3.0.0
+info:
+  title: UMC Study API
+  version: 1.0.0
+  description: UMC Study API with express, API 설명
+servers:
+  - url: http://localhost:3000
+paths:
+  /store/add:
+    post:
+      summary: Add a new store
+      tags:
+        - Store
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                region_id:
+                  type: integer
+                  example: 1
+                  description: ID of the region where the store is located
+                name:
+                  type: string
+                  example: Sample Store
+                  description: Name of the store
+                address:
+                  type: string
+                  example: 123 Sample Street
+                  description: Address of the store
+                star_rating:
+                  type: number
+                  format: float
+                  example: 4.5
+                  description: Star rating of the store
+      responses:
+        '201':
+          description: Store created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: ID of the created store
+                  region_id:
+                    type: integer
+                    description: ID of the region where the store is located
+                  name:
+                    type: string
+                    description: Name of the store
+                  address:
+                    type: string
+                    description: Address of the store
+                  star_rating:
+                    type: number
+                    format: float
+                    description: Star rating of the store
+                  created_at:
+                    type: string
+                    format: date-time
+                    description: Store creation timestamp
+                  updated_at:
+                    type: string
+                    format: date-time
+                    description: Store last update timestamp
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: string
+                    example: COMMON001
+                  message:
+                    type: string
+                    example: 잘못된 요청입니다.
+        '409':
+          description: Conflict - Store already exists
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: string
+                    example: STORE5001
+                  message:
+                    type: string
+                    example: 이미 존재하는 가게 입니다.
+                  details:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        description: ID of the existing store
+                      region_id:
+                        type: integer
+                        description: ID of the region where the store is located
+                      name:
+                        type: string
+                        description: Name of the store
+                      address:
+                        type: string
+                        description: Address of the store
+                      star_rating:
+                        type: number
+                        format: float
+                        description: Star rating of the store
+                      created_at:
+                        type: string
+                        format: date-time
+                        description: Store creation timestamp
+                      updated_at:
+                        type: string
+                        format: date-time
+                        description: Store last update timestamp
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: string
+                    example: COMMON000
+                  message:
+                    type: string
+                    example: 서버 에러, 관리자에게 문의 바랍니다.
+components:
+  schemas:
+    Store:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID of the store
+        region_id:
+          type: integer
+          description: ID of the region where the store is located
+        name:
+          type: string
+          description: Name of the store
+        address:
+          type: string
+          description: Address of the store
+        star_rating:
+          type: number
+          format: float
+          description: Star rating of the store
+        created_at:
+          type: string
+          format: date-time
+          description: Store creation timestamp
+        updated_at:
+          type: string
+          format: date-time
+          description: Store last update timestamp
