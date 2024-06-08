@@ -4,6 +4,7 @@ import { storeAddResponseDTO } from '../dtos/storeDTO';
 import { addStore } from "../models/storeDao";
 
 export const joinStore = async (body) => {
+
   const joinStoreData = await addStore({
     region_id: body.region_id,
     name: body.name,
