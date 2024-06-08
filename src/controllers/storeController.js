@@ -9,6 +9,6 @@ export const storeAdd = async (req, res, next) => {
     const result = await joinStore(req.body);
     res.send(response(status.SUCCESS, result));
   } catch (error) {
-    res.send(response(error, null));
+    res.send(response(status.STORENAME_ALREADY_EXIST));
   }
 };

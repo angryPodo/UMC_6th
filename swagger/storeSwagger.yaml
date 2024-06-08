@@ -8,7 +8,7 @@ servers:
 paths:
   /store/add:
     post:
-      summary: Add a new store
+      summary: 지역 가게 추가
       tags:
         - Store
       requestBody:
@@ -21,23 +21,23 @@ paths:
                 region_id:
                   type: integer
                   example: 1
-                  description: ID of the region where the store is located
+                  description: 가게가 속한 지역 ID
                 name:
                   type: string
-                  example: Sample Store
-                  description: Name of the store
+                  example: 갓청자 팝업 스토어
+                  description: 가게 이름
                 address:
                   type: string
-                  example: 123 Sample Street
-                  description: Address of the store
+                  example: 서울시 송파구 충민로
+                  description: 가게 주소
                 star_rating:
                   type: number
                   format: float
                   example: 4.5
-                  description: Star rating of the store
+                  description: 가게 별점
       responses:
         '200':
-          description: Store created successfully
+          description: 성공적으로 추가 되었습니다.
           content:
             application/json:
               schema:
@@ -63,10 +63,10 @@ paths:
                         example: 1
                       name:
                         type: string
-                        example: Sample Store
+                        example: 추가한 가게명
                       address:
                         type: string
-                        example: 123 Sample Street
+                        example: 가게의 주소
                       star_rating:
                         type: number
                         format: float
@@ -88,7 +88,7 @@ paths:
                     type: string
                     example: 잘못된 요청입니다.
         '409':
-          description: Conflict - Store already exists
+          description: 가게 중복시 충돌 오류
           content:
             application/json:
               schema:
@@ -108,28 +108,28 @@ paths:
                     properties:
                       id:
                         type: integer
-                        description: ID of the existing store
+                        description: 이미 존재하는 가게 ID
                       region_id:
                         type: integer
-                        description: ID of the region where the store is located
+                        description: 존재하는 가게 지역 ID
                       name:
                         type: string
-                        description: Name of the store
+                        description: 가게 이름
                       address:
                         type: string
-                        description: Address of the store
+                        description: 가게 주소
                       star_rating:
                         type: number
                         format: float
-                        description: Star rating of the store
+                        description: 별점
                       created_at:
                         type: string
                         format: date-time
-                        description: Store creation timestamp
+                        description: 추가된 시간
                       updated_at:
                         type: string
                         format: date-time
-                        description: Store last update timestamp
+                        description: 업데이트 된 시간
         '500':
           description: Internal Server Error
           content:
@@ -146,32 +146,3 @@ paths:
                   message:
                     type: string
                     example: 서버 에러, 관리자에게 문의 바랍니다.
-components:
-  schemas:
-    Store:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: ID of the store
-        region_id:
-          type: integer
-          description: ID of the region where the store is located
-        name:
-          type: string
-          description: Name of the store
-        address:
-          type: string
-          description: Address of the store
-        star_rating:
-          type: number
-          format: float
-          description: Star rating of the store
-        created_at:
-          type: string
-          format: date-time
-          description: Store creation timestamp
-        updated_at:
-          type: string
-          format: date-time
-          description: Store last update timestamp
